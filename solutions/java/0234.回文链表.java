@@ -1,0 +1,150 @@
+@SuppressWarnings("all")
+public class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
+//IMPORTANT!! Submit Code Region Begin(Do not remove this line)
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) return true;
+        ListNode slow = head, fast = head, prev = null;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            ListNode next = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = next;
+        }
+        if (fast != null) slow = slow.next;
+        while (prev != null) {
+            if (prev.val != slow.val) return false;
+            prev = prev.next;
+            slow = slow.next;
+        }
+        return true;
+    }
+//    public boolean isPalindrome(ListNode head) {
+//        if (head == null || head.next == null) {return true;}
+//        ListNode slow = head.next, fast = head.next.next, lastslow = head, queue = head;
+//        boolean flag = true;
+//        if (fast == null || fast.next == null) queue.next = null;
+//        while (fast != null) {
+//            if (lastslow != queue) {
+//                lastslow.next = queue;
+//                if (queue==head) queue.next = null;
+//                queue = lastslow;
+//                lastslow = slow;
+//            } else lastslow = lastslow.next;
+//            if (fast.next == null || fast.next.next == null) {
+//                if (fast.next == null && flag) {
+//                    slow = slow.next;
+//                    break;
+//                } else if (fast.next == null && !flag) {
+//                    break;
+//                } else {
+//                    fast = fast.next;
+//                    slow = slow.next;
+//                    flag = false;
+//                    continue;
+//                }
+//            }
+//            slow = slow.next;
+//            fast = fast.next.next;
+//        }
+//        while (queue != null) {
+//            if (queue.val != slow.val) return false;
+//            queue = queue.next;
+//            slow = slow.next;
+//        }
+//        return true;
+//    }
+}
+//IMPORTANT!! Submit Code Region End(Do not remove this line)
+
+void main() {
+    Solution solution = new Solution();
+    {
+        String[] rawInputs = new String[] { "[1,2,2,3]" };
+        String expected = "false";
+        runCase(solution, "isPalindrome", rawInputs, expected);
+    }
+    {
+        String[] rawInputs = new String[] { "[1,2,2,1]" };
+        String expected = "true";
+        runCase(solution, "isPalindrome", rawInputs, expected);
+    }
+    {
+        String[] rawInputs = new String[] { "[1,2,1]" };
+        String expected = "true";
+        runCase(solution, "isPalindrome", rawInputs, expected);
+    }
+    {
+        String[] rawInputs = new String[] { "[1,2,3]" };
+        String expected = "false";
+        runCase(solution, "isPalindrome", rawInputs, expected);
+    }
+    {
+        String[] rawInputs = new String[] { "[1,1]" };
+        String expected = "true";
+        runCase(solution, "isPalindrome", rawInputs, expected);
+    }
+    {
+        String[] rawInputs = new String[] { "[1,2]" };
+        String expected = "false";
+        runCase(solution, "isPalindrome", rawInputs, expected);
+    }
+    {
+        String[] rawInputs = new String[] { "[1,4,7,6,3,7,8,2,1,9,9,1,2,8,7,3,6,3,4,1]" };
+        String expected = "false";
+        runCase(solution, "isPalindrome", rawInputs, expected);
+    }
+    {
+        String[] rawInputs = new String[] { "[1,4,7,6,3,7,8,2,1,9,9,1,2,8,7,3,6,7,4,1]" };
+        String expected = "true";
+        runCase(solution, "isPalindrome", rawInputs, expected);
+    }
+    {
+        String[] rawInputs = new String[] { "[1,4,7,6,3,7,8,2,1,9,1,2,8,7,3,6,7,4,1]" };
+        String expected = "true";
+        runCase(solution, "isPalindrome", rawInputs, expected);
+    }
+}
+@SuppressWarnings("all")
+static void runCase(Object solution,String methodName,String[] rawInputs,String expected){try{java.lang.reflect.Method target=null;for(java.lang.reflect.Method m:solution.getClass().getDeclaredMethods()){if(m.getName().equals(methodName)){target=m;break;}}if(target==null)throw new RuntimeException("Method not found: "+methodName);Class<?>[] ptypes=target.getParameterTypes();Object[] args;if(isIntersectionCase(methodName,ptypes,rawInputs)){args=buildIntersectionArgs(rawInputs,ptypes);}else{if(rawInputs.length<ptypes.length)throw new RuntimeException("Not enough input lines. need="+ptypes.length+" got="+rawInputs.length);args=new Object[ptypes.length];for(int i=0;i<ptypes.length;i++)args[i]=parseValue(rawInputs[i],ptypes[i]);}Object out=target.invoke(solution,args);Object displayOut=target.getReturnType()==void.class?pickVoidOutput(args):formatSpecialOutput(methodName,out);System.out.println("input:");for(String s:rawInputs)System.out.println(s);System.out.println("output: "+toPrettyString(displayOut));System.out.println("expected output: "+expected);System.out.println();}catch(Exception e){e.printStackTrace();System.out.println();}}
+static Object pickVoidOutput(Object[] args){if(args==null||args.length==0)return null;for(Object arg:args){if(arg==null)continue;Class<?> c=arg.getClass();if(c.isArray()||arg instanceof java.util.Collection)return arg;}return args.length==1?args[0]:args;}
+static String toPrettyString(Object v){if(v==null)return"null";Class<?> c=v.getClass();if(isListNodeObject(v))return listNodeToString(v);if(isTreeNodeObject(v))return treeNodeToString(v);if(v instanceof String)return String.valueOf(v);if(!c.isArray())return String.valueOf(v);int n=java.lang.reflect.Array.getLength(v);StringBuilder sb=new StringBuilder();sb.append("[");for(int i=0;i<n;i++){if(i>0)sb.append(", ");Object e=java.lang.reflect.Array.get(v,i);sb.append(toPrettyString(e));}sb.append("]");return sb.toString();}
+static Object parseValue(String s,Class<?> type){try{s=s==null?"":s.trim();if(s.equals("null"))return null;if(type==String.class)return unquote(s);if(type==char.class||type==Character.class){String u=unquote(s);if(u.length()!=1)throw new RuntimeException("char expected, got: "+s);return u.charAt(0);}if(type==int.class||type==Integer.class)return Integer.parseInt(s);if(type==long.class||type==Long.class)return Long.parseLong(s);if(type==double.class||type==Double.class)return Double.parseDouble(s);if(type==float.class||type==Float.class)return Float.parseFloat(s);if(type==boolean.class||type==Boolean.class)return Boolean.parseBoolean(s);if(type==short.class||type==Short.class)return Short.parseShort(s);if(type==byte.class||type==Byte.class)return Byte.parseByte(s);if(isListNodeType(type))return buildSingleListNode(s,type);if(isTreeNodeType(type))return buildTreeNode(s,type);if(type.isArray()){Class<?> comp=type.getComponentType();java.util.List<String> items=splitTopLevelArrayItems(s);Object arr=java.lang.reflect.Array.newInstance(comp,items.size());for(int i=0;i<items.size();i++){Object elem=parseValue(items.get(i),comp);java.lang.reflect.Array.set(arr,i,elem);}return arr;}if(java.util.List.class.isAssignableFrom(type)){java.util.List<String> items=splitTopLevelArrayItems(s);java.util.ArrayList<Object> list=new java.util.ArrayList<>();for(String it:items)list.add(parseJsonLike(it));return list;}if(java.util.Map.class.isAssignableFrom(type))return parseMapLike(s);return parseJsonLike(s);}catch(Exception e){throw new RuntimeException(e);}}
+static boolean isIntersectionCase(String methodName,Class<?>[] ptypes,String[] rawInputs){if(!"getIntersectionNode".equals(methodName))return false;if(ptypes==null||ptypes.length!=2)return false;if(rawInputs==null||rawInputs.length<5)return false;return isListNodeType(ptypes[0])&&isListNodeType(ptypes[1]);}
+static Object[] buildIntersectionArgs(String[] rawInputs,Class<?>[] ptypes)throws Exception{String intersectValStr=rawInputs[0].trim();String listAStr=rawInputs[1].trim();String listBStr=rawInputs[2].trim();int skipA=Integer.parseInt(rawInputs[3].trim());int skipB=Integer.parseInt(rawInputs[4].trim());Class<?> nodeType=ptypes[0];Object headA=buildSingleListNode(listAStr,nodeType);Object headB=buildSingleListNode(listBStr,nodeType);int intersectVal=0;try{intersectVal=Integer.parseInt(intersectValStr);}catch(Exception ignore){}if(intersectVal!=0){Object nodeA=getNodeAt(headA,skipA);Object nodeB=getNodeAt(headB,skipB);if(nodeA==null)throw new RuntimeException("skipA out of range: "+skipA);if(nodeB==null)throw new RuntimeException("skipB out of range: "+skipB);Object prevB=getPrevNode(headB,nodeB);if(prevB==null){headB=nodeA;}else{setNext(prevB,nodeA);}}return new Object[]{headA,headB};}
+static Object getNodeAt(Object head,int idx)throws Exception{Object cur=head;int i=0;while(cur!=null&&i<idx){cur=getNext(cur);i++;}return cur;}
+static Object getPrevNode(Object head,Object target)throws Exception{if(head==null||head==target)return null;Object cur=head;while(cur!=null){Object nxt=getNext(cur);if(nxt==target)return cur;cur=nxt;}return null;}
+static Object getNext(Object node)throws Exception{if(node==null)return null;java.lang.reflect.Field f=findField(node.getClass(),"next");if(f==null)throw new RuntimeException("No next field found in "+node.getClass().getName());f.setAccessible(true);return f.get(node);}
+static Object formatSpecialOutput(String methodName,Object out){if("getIntersectionNode".equals(methodName)){if(out==null)return"No intersection";Integer val=tryGetNodeVal(out);return val==null?"Intersected":"Intersected at '"+val+"'";}return out;}
+static boolean isListNodeType(Class<?> type){if(type==null)return false;String n=type.getName();return n.endsWith("ListNode")||n.contains("$ListNode");}
+static boolean isListNodeObject(Object o){return o!=null&&isListNodeType(o.getClass());}
+static Integer tryGetNodeVal(Object node){try{java.lang.reflect.Field f=findField(node.getClass(),"val");if(f==null)return null;f.setAccessible(true);Object v=f.get(node);if(v instanceof Number)return((Number)v).intValue();if(v!=null){try{return Integer.parseInt(String.valueOf(v));}catch(Exception ignore){}}return null;}catch(Exception e){return null;}}
+static Object buildSingleListNode(String s,Class<?> nodeType)throws Exception{java.util.List<String> items=splitTopLevelArrayItems(s);if(items==null||items.isEmpty())return null;Object head=null;Object prev=null;for(String it:items){Object node=createNodeObject(nodeType,it.trim());if(head==null)head=node;if(prev!=null)setNext(prev,node);prev=node;}return head;}
+static String listNodeToString(Object head){try{java.util.ArrayList<String> vals=new java.util.ArrayList<>();java.util.HashSet<Object> seen=new java.util.HashSet<>();Object cur=head;while(cur!=null&&!seen.contains(cur)){seen.add(cur);Integer val=tryGetNodeVal(cur);vals.add(val==null?"null":String.valueOf(val));cur=getNext(cur);}if(cur!=null)vals.add("...");return"["+String.join(", ",vals)+"]";}catch(Exception e){return"ListNode";}}
+static boolean isTreeNodeType(Class<?> type){if(type==null)return false;String n=type.getName();return n.endsWith("TreeNode")||n.contains("$TreeNode");}
+static boolean isTreeNodeObject(Object o){return o!=null&&isTreeNodeType(o.getClass());}
+static Object buildTreeNode(String s,Class<?> nodeType)throws Exception{java.util.List<String> items=splitTopLevelArrayItems(s);if(items==null||items.isEmpty())return null;if(items.size()==1&&"null".equals(items.get(0).trim()))return null;java.util.ArrayList<Object> nodes=new java.util.ArrayList<>();for(String it:items){String t=it.trim();if("null".equals(t))nodes.add(null);else nodes.add(createNodeObject(nodeType,t));}int j=1;for(int i=0;i<nodes.size()&&j<nodes.size();i++){Object cur=nodes.get(i);if(cur==null)continue;if(j<nodes.size())setChild(cur,"left",nodes.get(j++));if(j<nodes.size())setChild(cur,"right",nodes.get(j++));}return nodes.get(0);}
+static String treeNodeToString(Object root){try{if(root==null)return"[]";java.util.ArrayList<String> out=new java.util.ArrayList<>();java.util.LinkedList<Object> q=new java.util.LinkedList<>();q.add(root);while(!q.isEmpty()){Object cur=q.removeFirst();if(cur==null){out.add("null");}else{Integer val=tryGetNodeVal(cur);out.add(val==null?"null":String.valueOf(val));q.add(getChild(cur,"left"));q.add(getChild(cur,"right"));}}int end=out.size()-1;while(end>=0&&"null".equals(out.get(end)))end--;java.util.ArrayList<String> trimmed=new java.util.ArrayList<>();for(int i=0;i<=end;i++)trimmed.add(out.get(i));return"["+String.join(", ",trimmed)+"]";}catch(Exception e){return"TreeNode";}}
+static final Object NO_VALUE=new Object();
+static Object createNodeObject(Class<?> nodeType,String rawVal)throws Exception{String s=rawVal==null?"":rawVal.trim();if(s.equals("null"))return null;java.lang.reflect.Constructor<?>[] ctors=nodeType.getDeclaredConstructors();java.util.Arrays.sort(ctors,new java.util.Comparator<java.lang.reflect.Constructor<?>>() {public int compare(java.lang.reflect.Constructor<?> a,java.lang.reflect.Constructor<?> b){return a.getParameterCount()-b.getParameterCount();}});Class<?> enclosing=nodeType.getEnclosingClass();boolean nonStaticInner=enclosing!=null&&!java.lang.reflect.Modifier.isStatic(nodeType.getModifiers());Object outer=null;if(nonStaticInner)outer=createOuterInstance(enclosing);for(java.lang.reflect.Constructor<?> ctor:ctors){ctor.setAccessible(true);Class<?>[] pts=ctor.getParameterTypes();try{if(!nonStaticInner){if(pts.length==1){Object arg=convertScalarForNodeValue(s,pts[0]);if(arg!=NO_VALUE)return ctor.newInstance(arg);}}else{if(pts.length==2&&pts[0]==enclosing){Object arg=convertScalarForNodeValue(s,pts[1]);if(arg!=NO_VALUE)return ctor.newInstance(outer,arg);}}}catch(Exception ignore){}}for(java.lang.reflect.Constructor<?> ctor:ctors){ctor.setAccessible(true);Class<?>[] pts=ctor.getParameterTypes();try{Object node;if(!nonStaticInner){if(pts.length!=0)continue;node=ctor.newInstance();}else{if(pts.length!=1||pts[0]!=enclosing)continue;node=ctor.newInstance(outer);}setVal(node,s);return node;}catch(Exception ignore){}}throw new RuntimeException("Cannot construct node for type: "+nodeType.getName());}
+static Object convertScalarForNodeValue(String s,Class<?> targetType){try{if(targetType==int.class||targetType==Integer.class)return Integer.parseInt(s);if(targetType==long.class||targetType==Long.class)return Long.parseLong(s);if(targetType==short.class||targetType==Short.class)return Short.parseShort(s);if(targetType==byte.class||targetType==Byte.class)return Byte.parseByte(s);if(targetType==double.class||targetType==Double.class)return Double.parseDouble(s);if(targetType==float.class||targetType==Float.class)return Float.parseFloat(s);if(targetType==boolean.class||targetType==Boolean.class)return Boolean.parseBoolean(s);if(targetType==char.class||targetType==Character.class){String u=unquote(s);if(u.length()==1)return u.charAt(0);return NO_VALUE;}if(targetType==String.class)return unquote(s);if(targetType==Object.class){try{return Integer.parseInt(s);}catch(Exception ignore){}try{return Long.parseLong(s);}catch(Exception ignore){}return unquote(s);}return NO_VALUE;}catch(Exception e){return NO_VALUE;}}
+static void setVal(Object node,String rawVal)throws Exception{java.lang.reflect.Field valField=findField(node.getClass(),"val");if(valField==null)throw new RuntimeException("No val field found in "+node.getClass().getName());valField.setAccessible(true);Object v=convertScalarForNodeValue(rawVal,valField.getType());if(v==NO_VALUE)throw new RuntimeException("Cannot convert value '"+rawVal+"' to "+valField.getType().getName());valField.set(node,v);}
+static void setNext(Object node,Object next)throws Exception{java.lang.reflect.Field nextField=findField(node.getClass(),"next");if(nextField==null)throw new RuntimeException("No next field found in "+node.getClass().getName());nextField.setAccessible(true);nextField.set(node,next);}
+static void setChild(Object node,String childName,Object child)throws Exception{java.lang.reflect.Field f=findField(node.getClass(),childName);if(f==null)throw new RuntimeException("No "+childName+" field found in "+node.getClass().getName());f.setAccessible(true);f.set(node,child);}
+static Object getChild(Object node,String childName)throws Exception{if(node==null)return null;java.lang.reflect.Field f=findField(node.getClass(),childName);if(f==null)return null;f.setAccessible(true);return f.get(node);}
+static java.lang.reflect.Field findField(Class<?> c,String name){Class<?> cur=c;while(cur!=null){try{return cur.getDeclaredField(name);}catch(NoSuchFieldException e){cur=cur.getSuperclass();}}return null;}
+static Object createOuterInstance(Class<?> enclosing)throws Exception{java.lang.reflect.Constructor<?> ctor=enclosing.getDeclaredConstructor();ctor.setAccessible(true);return ctor.newInstance();}
+static String unquote(String s){s=s.trim();if((s.startsWith("\"")&&s.endsWith("\""))||(s.startsWith("'")&&s.endsWith("'")))s=s.substring(1,s.length()-1);return s;}
+static Object parseJsonLike(String s){s=s.trim();if(s.equals("null"))return null;if(s.equals("true")||s.equals("false"))return Boolean.parseBoolean(s);if(s.startsWith("\"")||s.startsWith("'"))return unquote(s);if(s.startsWith("[")){java.util.List<String> items=splitTopLevelArrayItems(s);java.util.ArrayList<Object> list=new java.util.ArrayList<>();for(String it:items)list.add(parseJsonLike(it));return list;}if(s.startsWith("{"))return parseMapLike(s);if(s.matches("[-+]?\\d+")){try{return Integer.parseInt(s);}catch(Exception ignore){}try{return Long.parseLong(s);}catch(Exception ignore){}}if(s.matches("[-+]?\\d*\\.\\d+([eE][-+]?\\d+)?")||s.matches("[-+]?\\d+([eE][-+]?\\d+)?"))try{return Double.parseDouble(s);}catch(Exception ignore){}return s;}
+static java.util.List<String> splitTopLevelArrayItems(String s){s=s.trim();if(!s.startsWith("[")||!s.endsWith("]")){java.util.ArrayList<String> one=new java.util.ArrayList<>();if(!s.isEmpty())one.add(s);return one;}String body=s.substring(1,s.length()-1).trim();java.util.ArrayList<String> out=new java.util.ArrayList<>();if(body.isEmpty())return out;int depth=0;boolean inStr=false;char strCh=0;int start=0;for(int i=0;i<body.length();i++){char ch=body.charAt(i);if(inStr){if(ch==strCh&&body.charAt(Math.max(i-1,0))!='\\')inStr=false;continue;}if(ch=='"'||ch=='\''){inStr=true;strCh=ch;continue;}if(ch=='['||ch=='{'||ch=='(')depth++;else if(ch==']'||ch=='}'||ch==')')depth--;else if(ch==','&&depth==0){out.add(body.substring(start,i).trim());start=i+1;}}out.add(body.substring(start).trim());return out;}
+static java.util.Map<String,Object> parseMapLike(String s){s=s.trim();if(!s.startsWith("{")||!s.endsWith("}"))throw new RuntimeException("map expected: "+s);String body=s.substring(1,s.length()-1).trim();java.util.LinkedHashMap<String,Object> map=new java.util.LinkedHashMap<>();if(body.isEmpty())return map;java.util.List<String> parts=splitTopLevelComma(body);for(String kv:parts){int colon=findTopLevelColon(kv);if(colon<0)throw new RuntimeException("bad map entry: "+kv);String k=kv.substring(0,colon).trim();String v=kv.substring(colon+1).trim();k=unquote(k);map.put(k,parseJsonLike(v));}return map;}
+static java.util.List<String> splitTopLevelComma(String body){java.util.ArrayList<String> out=new java.util.ArrayList<>();int depth=0;boolean inStr=false;char strCh=0;int start=0;for(int i=0;i<body.length();i++){char ch=body.charAt(i);if(inStr){if(ch==strCh&&body.charAt(Math.max(i-1,0))!='\\')inStr=false;continue;}if(ch=='"'||ch=='\''){inStr=true;strCh=ch;continue;}if(ch=='['||ch=='{'||ch=='(')depth++;else if(ch==']'||ch=='}'||ch==')')depth--;else if(ch==','&&depth==0){out.add(body.substring(start,i).trim());start=i+1;}}out.add(body.substring(start).trim());return out;}
+static int findTopLevelColon(String s){int depth=0;boolean inStr=false;char strCh=0;for(int i=0;i<s.length();i++){char ch=s.charAt(i);if(inStr){if(ch==strCh&&s.charAt(Math.max(i-1,0))!='\\')inStr=false;continue;}if(ch=='"'||ch=='\''){inStr=true;strCh=ch;continue;}if(ch=='['||ch=='{'||ch=='(')depth++;else if(ch==']'||ch=='}'||ch==')')depth--;else if(ch==':'&&depth==0)return i;}return-1;}
