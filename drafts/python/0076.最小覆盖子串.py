@@ -10,4 +10,4 @@ class Solution:
                     resl = l
                 c[s[l]] += 1
                 l+=1
-        return s[resl:resl+size+1] if size != float('inf') else ''
+        return s[resl:resl+size] if size != float('inf') else ''
