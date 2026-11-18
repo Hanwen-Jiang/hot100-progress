@@ -8,7 +8,7 @@ class ListNode:
 class LRUCache:
 
     def __init__(self, capacity: int):
-        self._map = {}
+        self._set = set([])
         self.capacity = capacity
         self.tail, self.dummy = ListNode(), ListNode()
         self.tail.prev, self.dummy.next = self.dummy, self.tail
@@ -19,6 +19,7 @@ class LRUCache:
             if x.key == key:
                 x.prev.next, x.next.prev = x.next, x.prev
                 self.capacity+=1
+                self._set.remove(key)
                 return x.value
             x = x.next
         return -1
@@ -28,6 +29,7 @@ class LRUCache:
         x = ListNode(key, value, self.dummy, p)
         p.prev, self.dummy.next = x, x
         self.capacity-=1
+        self._set.add(key)
 
     def get(self, key: int) -> int:
         x=self._delete(key)
@@ -36,6 +38,8 @@ class LRUCache:
         return x
 
     def put(self, key: int, value: int) -> None:
+        if key in self._set:
+            self._delete(key)
         self._popleft(key, value)
         if self.capacity < 0:
             x = self.tail.prev.prev
