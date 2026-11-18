@@ -1,7 +1,7 @@
+from collections import deque
 n = int(input())
 datas = list(input())
 res = []
-form collections import deque
 
 class Tree:
     def __init__(self,d=None, l=None, r=None):
@@ -21,3 +21,5 @@ def build():
             y.add(y2)
         x=y
     return tree
+
+build()
