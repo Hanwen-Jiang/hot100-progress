@@ -1,5 +1,4 @@
 from collections import deque
-import math
 import sys
 n = int(input())
 if n == 0:
