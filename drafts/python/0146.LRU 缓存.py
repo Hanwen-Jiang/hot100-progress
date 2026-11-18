@@ -25,7 +25,7 @@ class LRUCache:
     def _popleft(self, key, value):
         p = self.dummy.next
         x = ListNode(key, value, self.dummy, p)
-        p.prev = x
+        p.prev, self.dummy.next = x, x
         self.capacity-=1
 
     def get(self, key: int) -> int:
