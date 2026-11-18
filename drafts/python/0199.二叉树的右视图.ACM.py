@@ -15,7 +15,7 @@ def build():
         y = deque([])
         while len(k) != 0:
             x = k.popleft()
-            y1, y2 = Tree(dq.popleft()), Tree(dq.popleft())
+            y1, y2 = Tree(dq.popleft()) if len(dq)!=0 else None, Tree(dq.popleft()) if len(dq)!=0 else None
             x.left, x.right = y1, y2
             y.append(y1)
             y.append(y2)
