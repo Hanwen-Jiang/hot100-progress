@@ -1,6 +1,6 @@
 from collections import deque
 n = int(input())
-datas = list(input().split())
+datas = [None if x=='null' else x for x in input().split()]
 res = []
 
 class Tree:
