@@ -4,3 +4,4 @@ class Solution:
         c, l, size = Counter(t), 0, float('inf')
         for i, x in enumerate(s):
             c[x] -= 1
+            if not any(c.values()):
