@@ -2,6 +2,7 @@ class ListNode:
     def __init__(self, key=None, value=None, prev=None, next=None):
         self.key = key
         self.prev = prev
+        self.value = value
         self.next = next
 
 class LRUCache:
