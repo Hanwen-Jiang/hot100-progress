@@ -9,4 +9,4 @@ class Tree:
         
 def build():
     k, ind = deque([datas[0]]), 0
-    while k
+    while len(k) != 0:
