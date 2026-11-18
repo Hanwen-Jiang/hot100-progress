@@ -6,10 +6,14 @@
 class Solution:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         dummy = ListNode(0, head)
-        kth, last = dummy, dummy
+        kth = dummy
         while True:
+            gprev = kth
             for _ in range(k):
                 kth = kth.next
                 if kth == None:
                     return dummy.next
-            prev, cur = last.next, kth
+            gnext = kth.next
+            prev, cur = gnext, gprev.next
+            while cur != gnext:
+                cur.next, cur, prev = prev, cur.next, cur
