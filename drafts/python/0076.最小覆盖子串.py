@@ -5,4 +5,4 @@ class Solution:
         for i, x in enumerate(s):
             c[x] -= 1
             while not any(c.values()):
-                c[x] += 1
+                c[s[l]] += 1
