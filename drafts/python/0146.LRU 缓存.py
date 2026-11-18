@@ -1,7 +1,6 @@
 class ListNode:
-    def __init__(self, key=None, value=None, prev=None, next=None):
+    def __init__(self, key=None, prev=None, next=None):
         self.key = key
-        self.value = value
         self.prev = prev
         self.next = next
 
@@ -19,15 +18,17 @@ class LRUCache:
             x = x.next
             if x.key == key:
                 x.prev.next, x.next.prev = x.next, x.prev
-        return
+                delete self._map[key]
+                return
 
     def _popleft(self, key, value):
         p = dummy.next
-        x = ListNode(key, value, dummy, p)
+        x = ListNode(key, dummy, p)
         p.prev = x
+        self._map[key] = value
 
     def get(self, key: int) -> int:
-
+        if key in self._map:
     def put(self, key: int, value: int) -> None:
         
 
