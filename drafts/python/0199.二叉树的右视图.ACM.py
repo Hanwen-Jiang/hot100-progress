@@ -8,7 +8,6 @@ if n == 0:
     sys.exit()
 datas = [None if x=='null' else x for x in input().split()]
 res = []
-print(n.bit_length())
 
 class Tree:
     def __init__(self,d=None, l=None, r=None):
@@ -38,7 +37,6 @@ def build():
 
 tree = build()
 dq1 = deque([tree])
-print(tree.data)
 res.append(tree.data)
 while len(dq1) != 0:
     dq2 = deque([])
@@ -50,5 +48,8 @@ while len(dq1) != 0:
             dq2.append(x.right)
     if len(dq2) > 0:
         res.append(dq2[-1].data)
-        print(dq2[-1].data)
     dq1=dq2
+    
+print(len(res))
+for x in res:
+    print(x)
