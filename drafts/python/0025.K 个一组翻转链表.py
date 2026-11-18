@@ -17,3 +17,5 @@ class Solution:
             prev, cur = gnext, gprev.next
             while cur != gnext:
                 cur.next, cur, prev = prev, cur.next, cur
+            kth, gprev.next = gprev.next, cur
+        return None
