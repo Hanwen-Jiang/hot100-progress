@@ -15,11 +15,11 @@ def build():
         y = deque([])
         while len(k) != 0:
             x = k.popleft()
-            y1, y2 = dq.popleft(), dq.popleft()
-            x.left, x.right = Tree(y1), Tree(y2)
-            y.add(y1)
-            y.add(y2)
-        x=y
+            y1, y2 = Tree(dq.popleft()), Tree(dq.popleft())
+            x.left, x.right = y1, y2
+            y.append(y1)
+            y.append(y2)
+        k=y
     return tree
 
 build()
