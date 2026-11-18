@@ -1,12 +1,13 @@
 from collections import deque
 import math
+import sys
 n = int(input())
 datas = [None if x=='null' else x for x in input().split()]
 res = []
 if len(datas) == 0:
     print(0)
     print()
-    return
+    sys.exit()
 print(math.ceil(math.log2(n + 1)))
 
 class Tree:
