@@ -8,7 +8,7 @@ if n == 0:
     sys.exit()
 datas = [None if x=='null' else x for x in input().split()]
 res = []
-print(int(math.log2(n + 1)+1))
+print(int(math.log2(n)+1))
 
 class Tree:
     def __init__(self,d=None, l=None, r=None):
