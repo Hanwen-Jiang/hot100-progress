@@ -41,8 +41,11 @@ while len(dq1) != 0:
     dq2 = deque([])
     while len(dq1) != 0:
         x=dq1.popleft()
-        dq2.append(x.left)
-        dq2.append(x.right)
-    res.append(dq2[-1].data)
-    print(dq2[-1].data)
+        if x.left is not None:
+            dq2.append(x.left)
+        if x.right is not None:
+            dq2.append(x.right)
+    if len(dq2) > 0:
+        res.append(dq2[-1].data)
+        print(dq2[-1].data)
     dq1=dq2
