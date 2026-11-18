@@ -24,8 +24,10 @@ def build():
         y = deque([])
         while len(k) != 0:
             x = k.popleft()
-            y1 = Tree(dq.popleft()) if len(dq)!=0 else None
-            y2 = Tree(dq.popleft()) if len(dq)!=0 else None
+            d1 = dq.popleft() if len(dq)!=0 else None
+            d2 = dq.popleft() if len(dq)!=0 else None
+            y1 = Tree(d1) if d1 is not None else None
+            y2 = Tree(d2) if d1 is not None else None
             x.left, x.right = y1, y2
             if y1 is not None:
                 y.append(y1)
