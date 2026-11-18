@@ -1,3 +1,6 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        print('ok')
+        m = {}
+        for i, a in enumerate(s):
+            if a not in m:
+                m[a] = i
