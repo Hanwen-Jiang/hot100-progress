@@ -10,7 +10,7 @@ class Tree:
         
 def build():
     tree = Tree(datas[0])
-    k, dq = deque(tree), deque(datas[1:])
+    k, dq = deque([tree]), deque(datas[1:])
     while len(k) != 0:
         y = deque([])
         while len(k) != 0:
