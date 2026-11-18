@@ -1,5 +1,6 @@
 n = int(input())
 datas = list(input())
+res = []
 form collections import deque
 
 class Tree:
@@ -9,7 +10,6 @@ class Tree:
         
 def build():
     tree = Tree(datas[0])
-    head = tree
     k, dq = deque(tree), deque(datas[1:])
     while len(k) != 0:
         y = deque([])
