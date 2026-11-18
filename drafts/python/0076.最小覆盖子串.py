@@ -4,7 +4,7 @@ class Solution:
         c, l, size, resl = Counter(t), 0, float('inf'), 0
         for i, x in enumerate(s):
             c[x] -= 1
-            while not any(c.values()):
+            while not any([k>0 for k in c.values()]):
                 if size > i-l+1:
                     size = i-l+1
                     resl = l
