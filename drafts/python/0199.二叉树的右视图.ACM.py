@@ -1,4 +1,5 @@
 from collections import deque
+import math
 n = int(input())
 datas = [None if x=='null' else x for x in input().split()]
 res = []
@@ -6,7 +7,7 @@ if len(datas) == 0:
     print(0)
     print()
     return
-print()
+print(math.ceil(math.log2(n + 1)))
 
 class Tree:
     def __init__(self,d=None, l=None, r=None):
@@ -31,6 +32,7 @@ def build():
 
 tree = build()
 dq1 = deque([tree])
+print(tree.data)
 res.append(tree.data)
 while len(dq1) != 0:
     dq2 = deque([])
@@ -39,4 +41,5 @@ while len(dq1) != 0:
         dq2.append(x.left)
         dq2.append(x.right)
     res.append(dq2[-1].data)
+    print(dq2[-1].data)
     dq1=dq2
