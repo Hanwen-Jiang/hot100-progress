@@ -26,8 +26,10 @@ def build():
             x = k.popleft()
             y1, y2 = Tree(dq.popleft()) if len(dq)!=0 else None, Tree(dq.popleft()) if len(dq)!=0 else None
             x.left, x.right = y1, y2
-            y.append(y1)
-            y.append(y2)
+            if y1 is not None:
+                y.append(y1)
+            if y2 is not None:
+                y.append(y2)
         k=y
     return tree
 
